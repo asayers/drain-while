@@ -6,3 +6,11 @@ authors = ["Alex Sayers <alex.sayers@gmail.com>"]
 [lib]
 name = "drain_while"
 path = "lib.rs"
+
+[dev-dependencies]
+easybench = "0.1"
+
+[[bench]]
+name = "bench"
+path = "benches/all.rs"
+harness = false
