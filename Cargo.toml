@@ -1,0 +1,8 @@
+[package]
+name = "drain-while"
+version = "0.1.0"
+authors = ["Alex Sayers <alex.sayers@gmail.com>"]
+
+[lib]
+name = "drain_while"
+path = "lib.rs"
