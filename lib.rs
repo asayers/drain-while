@@ -40,17 +40,6 @@ pub trait DrainWhileable<T> {
     /// assert_eq!(orig, vec![]);
     /// ```
     ///
-    /// Note that the implementation does *not* guarantee that `pred` is called only once per call
-    /// to `next()`. Therefore, the following will not necessarily be valid:
-    ///
-    /// ```
-    /// # use drain_while::*;
-    /// let mut orig: Vec<usize> = vec![0,1,2,3,4,5];
-    /// let mut i = 0;
-    /// let take_3: Vec<usize> = orig.drain_while(move|_| { i+=1; i <= 3 }).collect();
-    /// // assert_eq!(take_3, vec![0,1,2]);  - not necessarily!
-    /// ```
-    ///
     /// The behaviour of `drain_while()` differs from `drain().take_while()` in the final state of
     /// the original vector, as illustrated here:
     ///
@@ -63,7 +52,7 @@ pub trait DrainWhileable<T> {
     /// assert_eq!(v1, vec![]);
     /// assert_eq!(v2, vec![3,4,5]);
     /// ```
-    fn drain_while<P>(&mut self, pred: P) -> DrainWhile<T> where P: FnMut(&T) -> bool;
+    fn drain_while<P>(&mut self, pred: P) -> DrainWhile<T> where P: Fn(&T) -> bool;
 }
 
 // Just a newtype to allow changing the implementation later.

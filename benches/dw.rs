@@ -4,7 +4,7 @@ use easybench::*;
 pub fn bench() {
     let vec = (0..100).into_iter().zip((0..100).into_iter()).collect::<Vec<(usize,usize)>>();
     fn bench_fn<F>(n: usize, f: F, xs: &mut Vec<(usize,usize)>)
-            where F: FnMut(&(usize,usize)) -> bool {
+            where F: Fn(&(usize,usize)) -> bool {
         let mut t = 0;
         for (_,x) in xs.drain_while(f) { t += x; }
         assert_eq!(t, n);
