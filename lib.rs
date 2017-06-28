@@ -24,7 +24,7 @@ use std::vec::Drain;
 pub trait DrainWhileable<T> {
     /// Take the elements of a vector, left-to-right, stopping at the first non-matching element.
     ///
-    /// The returned `Iterator` iterates over the longest prefex in which all elements satisfy
+    /// The returned `DrainWhile` iterates over the longest prefex in which all elements satisfy
     /// `pred`; when the iterator is dropped, the prefix is removed from `vec`.
     ///
     /// ```
@@ -52,9 +52,23 @@ pub trait DrainWhileable<T> {
     /// assert_eq!(v1, vec![]);
     /// assert_eq!(v2, vec![3,4,5]);
     /// ```
+    ///
+    /// The same caveats which apply to `drain` also apply to `drain_while`:
+    ///
+    /// 1. The element range is removed even if the iterator is only partially consumed or not
+    ///    consumed at all.
+    /// 2. It is unspecified how many elements are removed from the vector, if the `DrainWhile`
+    ///    value is leaked.
+    ///
+    /// The current implementation is fairly naive, but I believe there's scope for speeding it up
+    /// substantially.
     fn drain_while<P>(&mut self, pred: P) -> DrainWhile<T> where P: Fn(&T) -> bool;
 }
 
+/// A draining iterator for `Vec<T>`.
+///
+/// See [`Vec::drain_while`](trait.DrainWhileable.html#tymethod.drain_while) for more.
+//
 // Just a newtype to allow changing the implementation later.
 pub struct DrainWhile<'a, T: 'a>(Drain<'a, T>);
 impl<'a, T> Iterator for DrainWhile<'a, T> {
