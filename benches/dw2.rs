@@ -19,7 +19,17 @@ impl<'a,T,P> Iterator for DrainWhile<'a,T,P> where P: Fn(&T) -> bool {
 
 impl<'a,T,P> DrainWhile<'a,T,P> {
     pub fn from_vec(x: &'a mut Vec<T>, pred: P) -> DrainWhile<T,P> where P: Fn(&T) -> bool {
-        DrainWhile { inner: x.drain(..).peekable(), pred: pred }
+        // This is purely a performance optimisation for the 0-matching case.
+        let some_match = match x.first() {
+            Some(x) => pred(x),
+            _ => false
+        };
+        if some_match {
+            DrainWhile { inner: x.drain(..).peekable(), pred: pred }
+        } else {
+            /* none of them matched */
+            DrainWhile{ inner: x.drain(0..0).peekable(), pred: pred }
+        }
     }
 }
 

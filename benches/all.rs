@@ -5,8 +5,8 @@ mod dw;
 mod dw2;
 
 fn main() {
-    println!("### drain_while ######");
+    println!("\ndrain_while:");
     dw::bench();
-    println!("### drain_while_2 ####");
+    println!("\ndrain_while_2:");
     dw2::bench();
 }
