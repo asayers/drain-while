@@ -1,7 +1,10 @@
+extern crate drain_while;
+extern crate easybench;
+
 use drain_while::*;
 use easybench::*;
 
-pub fn bench() {
+fn main() {
     let vec = (0..100).into_iter().zip((0..100).into_iter()).collect::<Vec<(usize,usize)>>();
     fn bench_fn<F>(n: usize, f: F, xs: &mut Vec<(usize,usize)>)
             where F: Fn(&(usize,usize)) -> bool {

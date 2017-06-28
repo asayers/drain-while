@@ -18,5 +18,5 @@ easybench = "0.1"
 
 [[bench]]
 name = "bench"
-path = "benches/all.rs"
+path = "bench.rs"
 harness = false
