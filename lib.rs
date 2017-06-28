@@ -2,7 +2,7 @@
 This library provides a draining `Iterator` which stops when a predicate becomes false.
 
 ```
-use drain_while::VecExt;
+use drain_while::*;
 
 let mut original = vec![1,2,3,4,5];
 let mut matching = vec![];
@@ -15,13 +15,13 @@ assert_eq!(matching, vec![1,2]);
 assert_eq!(original, vec![3,4,5]);
 ```
 
-See the documentation for [`drain_while()`](trait.VecExt.html#tymethod.drain_while) for
+See the documentation for [`drain_while()`](trait.DrainWhileable.html#tymethod.drain_while) for
 more.
 */
 
 use std::vec::Drain;
 
-pub trait VecExt<T> {
+pub trait DrainWhileable<T> {
     /// Take the elements of a vector, left-to-right, stopping at the first non-matching element.
     ///
     /// The returned `Iterator` iterates over the longest prefex in which all elements satisfy
@@ -73,7 +73,7 @@ impl<'a, T> Iterator for DrainWhile<'a, T> {
     fn next(&mut self) -> Option<T> { self.0.next() }
 }
 
-impl<T> VecExt<T> for Vec<T> {
+impl<T> DrainWhileable<T> for Vec<T> {
     // TODO: Surely this can be implemented more efficiently, but it may not be worth the effort...
     fn drain_while<P>(&mut self, mut pred: P) -> DrainWhile<T> where P: FnMut(&T) -> bool {
         // This is purely a performance optimisation for the 0-matching case.

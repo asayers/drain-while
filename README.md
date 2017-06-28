@@ -1,7 +1,7 @@
 A draining `Iterator` which stops when a predicate becomes false.
 
 ```
-use drain_while::VecExt;
+use drain_while::*;
 
 let mut original = vec![1,2,3,4,5];
 let mut matching = vec![];
