@@ -3,7 +3,11 @@ name = "drain-while"
 version = "0.1.0"
 authors = ["Alex Sayers <alex.sayers@gmail.com>"]
 description = "A draining iterator which stops when a predicate becomes false"
+documentation = "https://docs.rs/drain-while/"
 repository = "https://github.com/asayers/drain-while"
+readme = "README.md"
+keywords = ["benchmark"]
+license = "MIT OR Apache-2.0"
 
 [lib]
 name = "drain_while"
